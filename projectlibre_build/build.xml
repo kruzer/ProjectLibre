@@ -74,7 +74,11 @@
 	</path>
 	
  	<taskdef resource="net/sf/antcontrib/antcontrib.properties" classpath="../projectlibre_contrib/ant-lib/ant-contrib-1.jar"/>
-	
+
+	<target name="check-java">
+			<echo message="Java Home: ${java.home}"/>
+			<echo message="Java Version: ${java.version}"/>
+	</target>	
 
 	<target name="contrib">
 		<if>
@@ -85,7 +89,7 @@
 	  </if>
 	</target>
 
-	<target name="prepare">
+	<target name="prepare" depends="check-java">
 		<mkdir dir="${build}"/>
 		<mkdir dir="${dist}"/>
 		<mkdir dir="${packages}"/>
@@ -97,10 +101,11 @@
  			<then>
 				<javac destdir="${build}"
 					classpathref="compile.class.path"
+					verbose="true"
 					debug="off"
 					nowarn="on"
-					source="1.6"
-					target="1.6">
+					source="21"
+					target="21">
 						<src path="${src_core}" />
 						<src path="${src_ui}" />
 						<src path="${src_reports}" />
@@ -116,8 +121,8 @@
 					classpathref="compile-no_contrib_built.class.path"
 					debug="off"
 					nowarn="on"
-					source="1.6"
-					target="1.6">
+					source="21"
+					target="21">
 						<src path="${src_core}" />
 						<src path="${src_ui}" />
 						<src path="${src_reports}" />
@@ -788,7 +793,7 @@
                 <fx:preferences shortcut="true"
                         menu="true"
                     install="true" />
-                <fx:platform j2se="6.0"/>
+                <fx:platform j2se="21"/>
             <!--fx:platform>
                 <fx:jvmuserarg name="-Xms" value="512m"/>
                 <fx:jvmuserarg name="-Xmx" value="1024m"/>
