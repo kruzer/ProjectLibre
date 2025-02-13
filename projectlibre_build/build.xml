@@ -250,7 +250,7 @@
 			<arg value="+x"/>
 			<arg value="${packages}/projectlibre-${version}/projectlibre.sh"/>
 		</exec>
-		<exec executable="/usr/local/bin/gtar"> <!-- to preserve permissions also add export COPYFILE_DISABLE=true -->
+		<exec executable="/usr/bin/tar"> <!-- to preserve permissions also add export COPYFILE_DISABLE=true -->
 			<arg value="--numeric-owner"/>
 			<arg value="--owner=0"/>
 			<arg value="--group=0"/>
@@ -805,7 +805,7 @@
     <target name="launch4j" depends="dist">
         <property name="launch4j_dir" value="resources/launch4j"/>
         <property name="launch4j_config" value="${launch4j_dir}/launch4j.xml"/>
-        <property name="launch4j_exe" value="${launch4j_dir}/launch4j-cli.exe"/>
+        <property name="launch4j_exe" value="${launch4j_dir}/launch4jc"/>
         <property name="outfile" value="${packages}/projectlibre.exe"/>
 
         <echo message="Creating Windows executable with Launch4j"/>
