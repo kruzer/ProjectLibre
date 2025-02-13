@@ -809,10 +809,16 @@
         <property name="outfile" value="${packages}/projectlibre.exe"/>
 
         <echo message="Creating Windows executable with Launch4j"/>
-        <exec executable="${launch4j_exe}">
+        <exec executable="${launch4j_exe}" classpathref="launch4j.classpath">
             <arg value="${launch4j_config}"/>
         </exec>
     </target>
+
+    <path id="launch4j.classpath">
+        <fileset dir="resources/launch4j/lib">
+            <include name="*.jar"/>
+        </fileset>
+    </path>
 
 
 
