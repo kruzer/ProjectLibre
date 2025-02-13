@@ -802,6 +802,18 @@
         </fx:deploy>
     </target>
 
+    <target name="launch4j" depends="dist">
+        <property name="launch4j_dir" value="resources/launch4j"/>
+        <property name="launch4j_config" value="${launch4j_dir}/launch4j.xml"/>
+        <property name="launch4j_exe" value="${launch4j_dir}/launch4j-cli.exe"/>
+        <property name="outfile" value="${packages}/projectlibre.exe"/>
+
+        <echo message="Creating Windows executable with Launch4j"/>
+        <exec executable="${launch4j_exe}">
+            <arg value="${launch4j_config}"/>
+        </exec>
+    </target>
+
 
 
     <target name="fxmac" depends="build">
@@ -948,7 +960,7 @@
 	
 	
 
-	<target name="all" depends="dir,tar,zip,mac-embedded,mac-new,mac-old,wix,readme,rpm,deb">
+	<target name="all" depends="dir,tar,zip,mac-embedded,mac-new,mac-old,wix,readme,rpm,deb,launch4j">
 	</target>
 
 
