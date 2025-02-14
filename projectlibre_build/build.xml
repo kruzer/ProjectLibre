@@ -1042,6 +1042,7 @@
 				<echo message="Inno Setup already downloaded." />
 			</else>
 		</if>
+		<mkdir dir="${wineprefix}" />
 		<exec executable="wine" osfamily="windows">
 			<arg value="${inno_exe}" />
 			<arg value="/SILENT" />
