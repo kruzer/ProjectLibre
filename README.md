@@ -2,6 +2,30 @@
 
 [English](#english) | [Polski](#polski)
 
+## Building
+
+To build the project, use the following commands:
+
+```bash
+# Build the jar file
+JAVA_HOME=/usr/lib/jvm/java-21-openjdk-amd64 ant -f projectlibre_build/build.xml
+
+# Build the Windows installer
+JAVA_HOME=/usr/lib/jvm/java-21-openjdk-amd64 ant -f projectlibre_build/build.xml windows-setup
+```
+
+## Budowanie
+
+Aby zbudować projekt, użyj następujących poleceń:
+
+```bash
+# Zbuduj plik jar
+JAVA_HOME=/usr/lib/jvm/java-21-openjdk-amd64 ant -f projectlibre_build/build.xml
+
+# Zbuduj instalator Windows
+JAVA_HOME=/usr/lib/jvm/java-21-openjdk-amd64 ant -f projectlibre_build/build.xml windows-setup
+```
+
 ## Polski
 
 Ten fork ProjectLibre zawiera tłumaczenie interfejsu użytkownika na język polski dla wersji 1.9.3.
