@@ -1043,7 +1043,7 @@
 			</else>
 		</if>
 		<mkdir dir="${wineprefix}" />
-		<exec executable="wine" osfamily="windows">
+		<exec executable="wine">
 			<arg value="${inno_exe}" />
 			<arg value="/SILENT" />
 			<env key="WINEPREFIX" value="${wineprefix}" />
@@ -1053,7 +1053,7 @@
 
 	<target name="windows-setup" depends="download-inno, launch4j">
 		<echo message="Creating Windows setup..." />
-		<exec executable="wine" osfamily="windows">
+		<exec executable="wine">
 			<arg value="C:\\Program Files (x86)\\Inno Setup 5\\ISCC.exe" />
 			<arg value="projectlibre.iss" />
 			<env key="WINEPREFIX" value="${wineprefix}" />
@@ -1064,7 +1064,7 @@
 
 	<target name="launch4j" depends="dist,download-launch4j, prepare-jre">
 		<echo message="Running Launch4j..." />
-		<exec executable="wine" osfamily="windows">
+		<exec executable="wine">
 			<arg value="${jdk21_windows_unzip}/bin/java.exe" />
 			<arg value="-jar" />
 			<arg value="${launch4j_dir}/launch4j.jar" />
