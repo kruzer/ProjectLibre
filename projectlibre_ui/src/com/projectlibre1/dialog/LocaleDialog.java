@@ -138,6 +138,9 @@ import com.projectlibre1.util.Alert;
 
 import net.sf.mpxj.common.RtfHelper;
 
+import com.projectlibre1.contrib.util.Log;
+import com.projectlibre1.contrib.util.LogFactory;
+
 public final class LocaleDialog extends AbstractDialog {
 	private static final long serialVersionUID = 1L;
 
@@ -154,6 +157,9 @@ public final class LocaleDialog extends AbstractDialog {
 	String[] externalListColumns={"code", "client.properties", "menu.properties"};
 	
 	ArrayList<LanguageProperties> files=new ArrayList<LanguageProperties>();
+
+  static Log log = LogFactory.getLog(LocaleDialog.class);
+
 	
 	public enum FileStatus {
 	    OK(Messages.getString("LocaleDialog.FileStatusOk")),
@@ -425,6 +431,7 @@ public final class LocaleDialog extends AbstractDialog {
 
 	private LocaleDialog(Frame owner) {
 		super(owner, "", true);
+		log.info("Jestem w locale dialog");
 		languageCombo=new JComboBox();
 		countryCombo=new JComboBox();
 		

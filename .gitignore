@@ -12,3 +12,7 @@ projectlibre_contrib/openproj-script.jar
 projectlibre_contrib/tmp/
 projectlibre_contrib/*
 projectlibre_contrib/projectlibre-contrib.jar
+.aider*
+debian/
+projectlibre_build/resources/launch4j/
+projectlibre_build/rpm_mageia/
