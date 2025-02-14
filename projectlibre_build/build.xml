@@ -1076,19 +1076,32 @@
 	</target>
 
 	<target name="prepare-jre" depends="download-jdk21-windows">
-		<echo message="Preparing JRE using jlink..." />
-		<exec executable="wine">
-			<arg value="${jdk21_windows_unzip}/bin/jlink.exe" />
-			<arg value="--module-path" />
-			<arg value="dist/projectlibre.jar" />
-			<arg value="--add-modules" />
-			<arg value="java.base,java.desktop,java.prefs,java.sql" />
-			<arg value="--output" />
-			<arg value="dist/jre" />
-			<env key="WINEPREFIX" value="${wineprefix}" />
-			<env key="WINEARCH" value="win64" />
-		</exec>
-		<echo message="JRE preparation complete." />
+		<condition property="jre_exists">
+			<available file="dist/jre" type="dir" />
+		</condition>
+		<if>
+			<not>
+				<isset property="jre_exists" />
+			</not>
+			<then>
+				<echo message="Preparing JRE using jlink..." />
+				<exec executable="wine">
+					<arg value="${jdk21_windows_unzip}/bin/jlink.exe" />
+					<arg value="--module-path" />
+					<arg value="dist/projectlibre.jar" />
+					<arg value="--add-modules" />
+					<arg value="java.base,java.desktop,java.prefs,java.sql" />
+					<arg value="--output" />
+					<arg value="dist/jre" />
+					<env key="WINEPREFIX" value="${wineprefix}" />
+					<env key="WINEARCH" value="win64" />
+				</exec>
+				<echo message="JRE preparation complete." />
+			</then>
+			<else>
+				<echo message="JRE already exists." />
+			</else>
+		</if>
 	</target>
 
 	<target name="clean">
