@@ -4,7 +4,7 @@
 
 ## Building
 
-To build the project, use the following commands:
+An example of linux build wit OpenJDK 21:
 
 ```bash
 # Build the jar file
@@ -16,7 +16,7 @@ JAVA_HOME=/usr/lib/jvm/java-21-openjdk-amd64 ant -f projectlibre_build/build.xml
 
 ## Budowanie
 
-Aby zbudować projekt, użyj następujących poleceń:
+Przykład na linux z OpenJDK 21:
 
 ```bash
 # Zbuduj plik jar
