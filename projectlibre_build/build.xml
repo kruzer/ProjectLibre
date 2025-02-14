@@ -1049,7 +1049,7 @@
 		<exec executable="wine" osfamily="windows">
 			<arg value="C:\\Program Files (x86)\\Inno Setup 5\\ISCC.exe" />
 			<arg value="projectlibre.iss" />
-			<env key="WINEPREFIX" value="/tmp/PL" />
+			<env key="WINEPREFIX" value="${wineprefix}" />
 			<env key="WINEARCH" value="win64" />
 		</exec>
 		<echo message="Windows setup creation complete." />

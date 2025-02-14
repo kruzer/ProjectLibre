@@ -3,7 +3,7 @@
 
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application. Do not use the same AppId value in other projects.
-AppId={{YourAppId}
+AppId=ProjectLibre
 AppName=ProjectLibre
 AppVersion=1.9.3
 ; NOTE: The value of AppPublisher should be the name of your organization.
@@ -13,10 +13,10 @@ AppSupportURL=http://www.projectlibre.com/
 AppUpdatesURL=http://www.projectlibre.com/
 DefaultDirName={pf}\ProjectLibre
 DefaultGroupName=ProjectLibre
-AllowNoDirectory=yes
+;AllowNoDirectory=yes
 DisableProgramGroupPage=yes
-LicenseFile=..\license\license2.rtf
-OutputDir=..\packages
+;LicenseFile=..\license\license2.rtf
+OutputDir=packages
 OutputBaseFilename=ProjectLibre-1.9.3-Setup
 SetupIconFile=resources\wix\msi_images\projectlibre.ico
 Compression=lzma
@@ -42,7 +42,7 @@ Name: "{group}\{cm:UninstallProgram,ProjectLibre}"; Filename: "{uninstallexe}"
 Name: "{commondesktop}\ProjectLibre"; Filename: "{app}\projectlibre.exe"; Tasks: desktopicon
 
 [Run]
-Filename: "{app}\projectlibre.exe"; Description: "{cm:LaunchApp,ProjectLibre}"; Flags: nowait postinstall skipifdoesntexist
+Filename: "{app}\projectlibre.exe"; Description: "ProjectLibre"; Flags: nowait postinstall skipifdoesntexist
 
 [UninstallDelete]
 Type: files; Name: "{app}\jre"
