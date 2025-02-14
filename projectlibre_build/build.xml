@@ -999,7 +999,9 @@
 
 	<target name="prepare-jre" depends="download-jdk21-windows">
 		<echo message="Preparing JRE using jlink..." />
-		<exec executable="wine" osfamily="windows" echo="true">
+		<property name="jlink.command" value="wine ${jdk21_windows_unzip}/bin/jlink.exe --module-path dist/projectlibre.jar --add-modules java.base,java.desktop,java.prefs,java.sql --output dist/jre" />
+		<echo message="Executing: ${jlink.command}" />
+		<exec executable="wine" osfamily="windows">
 			<arg value="${jdk21_windows_unzip}/bin/jlink.exe" />
 			<arg value="--module-path" />
 			<arg value="dist/projectlibre.jar" />
