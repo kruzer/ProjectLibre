@@ -74,11 +74,7 @@
 	</path>
 	
  	<taskdef resource="net/sf/antcontrib/antcontrib.properties" classpath="../projectlibre_contrib/ant-lib/ant-contrib-1.jar"/>
-
-	<target name="check-java">
-			<echo message="Java Home: ${java.home}"/>
-			<echo message="Java Version: ${java.version}"/>
-	</target>	
+	
 
 	<target name="contrib">
 		<if>
@@ -89,7 +85,7 @@
 	  </if>
 	</target>
 
-	<target name="prepare" depends="check-java">
+	<target name="prepare">
 		<mkdir dir="${build}"/>
 		<mkdir dir="${dist}"/>
 		<mkdir dir="${packages}"/>
@@ -101,7 +97,6 @@
  			<then>
 				<javac destdir="${build}"
 					classpathref="compile.class.path"
-					verbose="true"
 					debug="off"
 					nowarn="on"
 					source="21"
@@ -250,7 +245,7 @@
 			<arg value="+x"/>
 			<arg value="${packages}/projectlibre-${version}/projectlibre.sh"/>
 		</exec>
-		<exec executable="/usr/bin/tar"> <!-- to preserve permissions also add export COPYFILE_DISABLE=true -->
+		<exec executable="tar"> <!-- to preserve permissions also add export COPYFILE_DISABLE=true -->
 			<arg value="--numeric-owner"/>
 			<arg value="--owner=0"/>
 			<arg value="--group=0"/>
@@ -744,81 +739,62 @@
 	
     <target name="fxwindows" depends="build">
         <!-- Requires Inno Setup 5 -->
-        <property environment="env"/>
-        <var name="bundled_jdk" value="${bundled_jdk_windows}"/>
-        <if>
-            <equals arg1="${bundled_jdk}" arg2="" />
-            <then>
-                <var name="bundled_jdk" value="${env.JAVA_HOME}"/>
-            </then>
-        </if>
+                <property environment="env"/>
+                <var name="bundled_jdk" value="${bundled_jdk_windows}"/>
+                <if>
+                        <equals arg1="${bundled_jdk}" arg2="" />
+                        <then>
+                                <var name="bundled_jdk" value="${env.JAVA_HOME}"/>
+                        </then>
+                </if>
         <echo>Fx using java_home: ${bundled_jdk}</echo>
 
         <path id="fxant">
-            <filelist>
-                <file name="resources/fx"/>
-                <!-- Replace with the correct path to your ant-javafx.jar -->
-                <file name="${java.home}/../lib/ant-javafx.jar"/>
-            </filelist>
+                        <filelist>
+                        <file name="resources/fx"/>
+                <file name="C:\Program Files\Java\jdk1.8.0_202\lib\ant-javafx.jar"/>
+                 </filelist>
         </path>
 
         <taskdef resource="com/sun/javafx/tools/ant/antlib.xml"
                  uri="javafx:com.sun.javafx.tools.ant"
-                 classpathref="fxant"/>
+                        classpathref="fxant"/>
 
         <delete dir="${packages}/fxwindows"/>
-        <mkdir dir="${packages}/fxwindows"/>
+                <mkdir dir="${packages}/fxwindows"/>
 
         <fx:deploy width="1000" height="700"
                    nativeBundles="exe"
                    outdir="${packages}/fxwindows" outfile="projectlibre"
-                   verbose="true">
+                verbose="true">
             <fx:application name="ProjectLibre"
-                            mainClass="com.projectlibre1.main.Main"
-                            toolkit="swing"
-                            version="${version}"/>
+                mainClass="com.projectlibre1.main.Main"
+                toolkit="swing"
+                version="${version}"/>
             <fx:resources>
                 <fx:fileset dir="${dist}" includes="**/*"/>
-                <fx:fileset dir="." includes="license/**"/>
-                <fx:fileset type="license" dir="license" includes="license.rtf"/>
+                        <fx:fileset dir="." includes="license/**"/>
+                <fx:fileset type="license" dir="license" includes="license2.rtf"/>
             </fx:resources>
             <fx:info title="ProjectLibre"
-                     vendor="ProjectLibre"
-                     copyright="2012-2018 ProjectLibre Inc."
-                     license="CPAL">
+                vendor="ProjectLibre"
+                copyright="2012-2018 ProjectLibre Inc."
+                license="CPAL">
                 <fx:icon href="${resources}/wix/msi_images/projectlibre.ico"/>
                 <fx:association extension="pod" mimetype="application/projectlibre" description="ProjectLibre" icon="projectlibre.ico"/>
                 <fx:association extension="mpp" mimetype="application/vnd.ms-project" description="ProjectLibre" icon="projectlibre.ico"/>
                 <fx:association extension="xml" mimetype="application/xml" description="ProjectLibre" icon="projectlibre.ico"/>
-            </fx:info>
-            <fx:preferences shortcut="true"
-                            menu="true"
-                            install="true"/>
-            <fx:platform basedir="${bundled_jdk}"/>
+        </fx:info>
+                <fx:preferences shortcut="true"
+                        menu="true"
+                    install="true" />
+                <fx:platform j2se="6.0"/>
             <!--fx:platform>
                 <fx:jvmuserarg name="-Xms" value="512m"/>
                 <fx:jvmuserarg name="-Xmx" value="1024m"/>
             </fx:platform-->
         </fx:deploy>
     </target>
-
-    <target name="launch4j" depends="dist">
-        <property name="launch4j_dir" value="resources/launch4j"/>
-        <property name="launch4j_config" value="${launch4j_dir}/launch4j.xml"/>
-        <property name="launch4j_exe" value="${launch4j_dir}/launch4jc"/>
-        <property name="outfile" value="${packages}/projectlibre.exe"/>
-
-        <echo message="Creating Windows executable with Launch4j"/>
-        <exec executable="${launch4j_exe}" classpathref="launch4j.classpath">
-            <arg value="${launch4j_config}"/>
-        </exec>
-    </target>
-
-    <path id="launch4j.classpath">
-        <fileset dir="resources/launch4j/lib">
-            <include name="*.jar"/>
-        </fileset>
-    </path>
 
 
 
@@ -966,8 +942,58 @@
 	
 	
 
-	<target name="all" depends="dir,tar,zip,mac-embedded,mac-new,mac-old,wix,readme,rpm,deb,launch4j">
+	<target name="all" depends="dir,tar,zip,mac-embedded,mac-new,mac-old,wix,readme,rpm,deb">
 	</target>
+
+	<target name="download-jdk21-windows" depends="prepare">
+    <mkdir dir="${packages}" />
+
+    <condition property="jdk_exists">
+        <available file="${jdk21_windows_dir}" type="dir" />
+    </condition>
+
+    <if>
+        <not>
+            <isset property="jdk_exists" />
+        </not>
+        <then>
+            <get src="${jdk21_windows_url}" dest="${jdk21_windows_zip}" skipexisting="true"/>
+            <unzip src="${jdk21_windows_zip}" dest="${jdk21_windows_dir}">
+                <patternset>
+                    <include name="**/*"/>
+                </patternset>
+            </unzip>
+        </then>
+        <else>
+            <echo message="OpenJDK already downloaded and extracted." />
+        </else>
+    </if>
+</target>
+
+<target name="download-launch4j" depends="prepare">
+    <mkdir dir="${packages}" />
+
+    <condition property="launch4j_exists">
+        <available file="${launch4j_dir}/launch4j.exe" type="file" />
+    </condition>
+
+    <if>
+        <not>
+            <isset property="launch4j_exists" />
+        </not>
+        <then>
+            <get src="${launch4j_url}" dest="${launch4j_zip}" skipexisting="true"/>
+            <unzip src="${launch4j_zip}" dest="${packages}">
+                <patternset>
+                    <include name="**/*"/>
+                </patternset>
+            </unzip>
+        </then>
+        <else>
+            <echo message="Launch4j already downloaded and extracted." />
+        </else>
+    </if>
+</target>
 
 
 
