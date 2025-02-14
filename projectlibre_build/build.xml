@@ -1094,6 +1094,11 @@
 				<delete dir="${rpm}_@{rpmbuild}" />
 			</sequential>
 		</for>
+		<echo message="Cleaning WINEPREFIX: ${wineprefix}" />
+		<exec executable="rm" osfamily="unix">
+			<arg value="-rf" />
+			<arg value="${wineprefix}" />
+		</exec>
 	</target>
 
 
