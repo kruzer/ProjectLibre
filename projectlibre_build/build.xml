@@ -1055,14 +1055,14 @@
 		<echo message="Windows setup creation complete." />
 	</target>
 
-	<target name="launch4j" depends="download-launch4j, prepare-jre, dist">
+	<target name="launch4j" depends="dist,download-launch4j, prepare-jre">
 		<echo message="Running Launch4j..." />
 		<exec executable="wine" osfamily="windows">
 			<arg value="${jdk21_windows_unzip}/bin/java.exe" />
 			<arg value="-jar" />
 			<arg value="${launch4j_dir}/launch4j.jar" />
 			<arg value="launch4j.xml" />
-			<env key="WINEPREFIX" value="/tmp/PL" />
+			<env key="WINEPREFIX" value="${wineprefix}" />
 			<env key="WINEARCH" value="win64" />
 		</exec>
 		<echo message="Launch4j complete." />
@@ -1078,7 +1078,7 @@
 			<arg value="java.base,java.desktop,java.prefs,java.sql" />
 			<arg value="--output" />
 			<arg value="dist/jre" />
-			<env key="WINEPREFIX" value="/tmp/PL" />
+			<env key="WINEPREFIX" value="${wineprefix}" />
 			<env key="WINEARCH" value="win64" />
 		</exec>
 		<echo message="JRE preparation complete." />
@@ -1094,11 +1094,6 @@
 				<delete dir="${rpm}_@{rpmbuild}" />
 			</sequential>
 		</for>
-		<echo message="Cleaning WINEPREFIX: ${wineprefix}" />
-		<exec executable="rm" osfamily="unix">
-			<arg value="-rf" />
-			<arg value="${wineprefix}" />
-		</exec>
 	</target>
 
 
