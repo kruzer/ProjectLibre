@@ -1044,6 +1044,17 @@
 		</if>
 	</target>
 
+	<target name="windows-setup" depends="download-inno, launch4j">
+		<echo message="Creating Windows setup..." />
+		<exec executable="wine" osfamily="windows">
+			<arg value="C:\\Program Files (x86)\\Inno Setup 5\\ISCC.exe" />
+			<arg value="projectlibre.iss" />
+			<env key="WINEPREFIX" value="/tmp/PL" />
+			<env key="WINEARCH" value="win64" />
+		</exec>
+		<echo message="Windows setup creation complete." />
+	</target>
+
 	<target name="launch4j" depends="download-launch4j, prepare-jre, dist">
 		<echo message="Running Launch4j..." />
 		<exec executable="wine" osfamily="windows">
