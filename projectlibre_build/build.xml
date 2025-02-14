@@ -58,6 +58,13 @@
 	<property file="build-override.properties" />
 	<property file="build.properties" />
 
+	<!-- Wine properties -->
+	<property name="wineprefix" value="/tmp/projectlibre-build" />
+	<property name="winearch" value="win64" />
+
+	<!-- Inno Setup properties -->
+	<property name="innosetup_compiler" value="C:\\Program Files (x86)\\Inno Setup 5\\ISCC.exe" />
+
 	<path id="compile.class.path">
 		<fileset dir="../projectlibre_contrib">
 			<include name="projectlibre-contrib.jar" />
@@ -1047,32 +1054,43 @@
 			<arg value="${inno_exe}" />
 			<arg value="/SILENT" />
 			<env key="WINEPREFIX" value="${wineprefix}" />
-			<env key="WINEARCH" value="win64" />
+			<env key="WINEARCH" value="${winearch}" />
 		</exec>
 	</target>
 
 	<target name="windows-setup" depends="download-inno, launch4j">
 		<echo message="Creating Windows setup..." />
 		<exec executable="wine">
-			<arg value="C:\\Program Files (x86)\\Inno Setup 5\\ISCC.exe" />
+			<arg value="${innosetup_compiler}" />
 			<arg value="projectlibre.iss" />
 			<env key="WINEPREFIX" value="${wineprefix}" />
-			<env key="WINEARCH" value="win64" />
+			<env key="WINEARCH" value="${winearch}" />
 		</exec>
 		<echo message="Windows setup creation complete." />
 	</target>
 
 	<target name="launch4j" depends="dist,download-launch4j, prepare-jre">
-		<echo message="Running Launch4j..." />
-		<exec executable="wine">
-			<arg value="${jdk21_windows_unzip}/bin/java.exe" />
-			<arg value="-jar" />
-			<arg value="${launch4j_dir}/launch4j.jar" />
-			<arg value="launch4j.xml" />
-			<env key="WINEPREFIX" value="${wineprefix}" />
-			<env key="WINEARCH" value="win64" />
-		</exec>
-		<echo message="Launch4j complete." />
+		<condition property="launch4j_jar_exists">
+			<available file="${launch4j_dir}/launch4j.jar" type="file" />
+		</condition>
+		<if>
+			<isset property="launch4j_jar_exists" />
+			<then>
+				<echo message="Running Launch4j..." />
+				<exec executable="wine">
+					<arg value="${jdk21_windows_unzip}/bin/java.exe" />
+					<arg value="-jar" />
+					<arg value="${launch4j_dir}/launch4j.jar" />
+					<arg value="launch4j.xml" />
+					<env key="WINEPREFIX" value="${wineprefix}" />
+					<env key="WINEARCH" value="${winearch}" />
+				</exec>
+				<echo message="Launch4j complete." />
+			</then>
+			<else>
+				<echo message="Launch4j jar does not exist. Skipping Launch4j." />
+			</else>
+		</if>
 	</target>
 
 	<target name="prepare-jre" depends="download-jdk21-windows">
@@ -1094,7 +1112,7 @@
 					<arg value="--output" />
 					<arg value="dist/jre" />
 					<env key="WINEPREFIX" value="${wineprefix}" />
-					<env key="WINEARCH" value="win64" />
+					<env key="WINEARCH" value="${winearch}" />
 				</exec>
 				<echo message="JRE preparation complete." />
 			</then>
@@ -1114,6 +1132,11 @@
 				<delete dir="${rpm}_@{rpmbuild}" />
 			</sequential>
 		</for>
+		<echo message="Cleaning WINEPREFIX: ${wineprefix}" />
+		<exec executable="rm" osfamily="unix">
+			<arg value="-rf" />
+			<arg value="${wineprefix}" />
+		</exec>
 	</target>
 
 
