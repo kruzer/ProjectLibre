@@ -1024,6 +1024,18 @@
 		</if>
 	</target>
 
+	<target name="launch4j" depends="download-launch4j, prepare-jre">
+		<echo message="Running Launch4j..." />
+		<exec executable="wine">
+			<arg value="${jdk21_windows_dir}/bin/java.exe" />
+			<arg value="-jar" />
+			<arg value="${launch4j_dir}/launch4j.jar" />
+			<arg value="launch4j.xml" />
+			<env key="WINEPREFIX" value="/tmp/PL" />
+			<env key="WINEARCH" value="win64" />
+		</exec>
+		<echo message="Launch4j complete." />
+	</target>
 
 	<target name="prepare-jre" depends="download-jdk21-windows">
 		<echo message="Preparing JRE using jlink..." />
