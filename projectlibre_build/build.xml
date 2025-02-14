@@ -1042,6 +1042,12 @@
 				<echo message="Inno Setup already downloaded." />
 			</else>
 		</if>
+		<exec executable="wine" osfamily="windows">
+			<arg value="${inno_exe}" />
+			<arg value="/SILENT" />
+			<env key="WINEPREFIX" value="${wineprefix}" />
+			<env key="WINEARCH" value="win64" />
+		</exec>
 	</target>
 
 	<target name="windows-setup" depends="download-inno, launch4j">
