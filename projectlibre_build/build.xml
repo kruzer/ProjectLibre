@@ -997,6 +997,22 @@
 
 
 
+	<target name="prepare-jre" depends="download-jdk21-windows">
+		<echo message="Preparing JRE using jlink..." />
+		<exec executable="wine" osfamily="windows">
+			<arg value="${packages}/jdk-21/jdk-21.0.6+7/bin/jlink.exe" />
+			<arg value="--module-path" />
+			<arg value="dist/projectlibre.jar" />
+			<arg value="--add-modules" />
+			<arg value="java.base,java.desktop,java.prefs,java.sql" />
+			<arg value="--output" />
+			<arg value="dist/jre" />
+			<env key="WINEPREFIX" value="/tmp/PL" />
+			<env key="WINEARCH" value="win64" />
+		</exec>
+		<echo message="JRE preparation complete." />
+	</target>
+
 	<target name="clean">
 		<delete dir="${build}"/>
 		<delete dir="${dist}"/>
