@@ -999,8 +999,9 @@
 
 	<target name="prepare-jre" depends="download-jdk21-windows">
 		<echo message="Preparing JRE using jlink..." />
+		<mkdir dir="dist/jre" />
 		<exec executable="wine" osfamily="windows">
-			<arg value="${jdk21_windows_unzip}/bin/jlink.exe" />
+			<arg value="${jdk21_windows_dir}/bin/jlink.exe" />
 			<arg value="--module-path" />
 			<arg value="dist/projectlibre.jar" />
 			<arg value="--add-modules" />
