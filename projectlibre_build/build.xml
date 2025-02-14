@@ -1024,9 +1024,29 @@
 		</if>
 	</target>
 
+	<target name="download-inno" depends="prepare">
+		<mkdir dir="${packages}" />
+
+		<condition property="inno_exists">
+			<available file="${inno_exe}" type="file" />
+		</condition>
+
+		<if>
+			<not>
+				<isset property="inno_exists" />
+			</not>
+			<then>
+				<get src="${inno_url}" dest="${inno_exe}" skipexisting="true" />
+			</then>
+			<else>
+				<echo message="Inno Setup already downloaded." />
+			</else>
+		</if>
+	</target>
+
 	<target name="launch4j" depends="download-launch4j, prepare-jre, dist">
 		<echo message="Running Launch4j..." />
-		<exec executable="wine">
+		<exec executable="wine" osfamily="windows">
 			<arg value="${jdk21_windows_unzip}/bin/java.exe" />
 			<arg value="-jar" />
 			<arg value="${launch4j_dir}/launch4j.jar" />
