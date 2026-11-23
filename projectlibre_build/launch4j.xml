@@ -20,5 +20,13 @@
     <requires64Bit>false</requires64Bit>
     <minVersion>11</minVersion>
     <maxVersion>23</maxVersion>
+    <!-- Groovy 1.0 formulas need these on JDK 17+ (see add_opens in build.xml) -->
+    <opt>--add-opens=java.base/java.lang=ALL-UNNAMED</opt>
+    <opt>--add-opens=java.base/java.util=ALL-UNNAMED</opt>
+    <opt>--add-opens=java.base/java.text=ALL-UNNAMED</opt>
+    <opt>--add-opens=java.base/java.math=ALL-UNNAMED</opt>
+    <opt>--add-opens=java.base/java.io=ALL-UNNAMED</opt>
+    <opt>--add-opens=java.desktop/java.awt=ALL-UNNAMED</opt>
+    <opt>--add-opens=java.desktop/javax.swing=ALL-UNNAMED</opt>
   </jre>
 </launch4jConfig>

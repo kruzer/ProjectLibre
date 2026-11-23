@@ -58,6 +58,12 @@
 	<property file="build-override.properties" />
 	<property file="build.properties" />
 
+	<!-- Bundled Groovy 1.0 calls setAccessible(true) on JDK class members while
+	     compiling formulas (context menus, Indent/Outdent, styles, sorters).
+	     JDK 17+ forbids that unless the packages are opened; without these the
+	     formulas silently fail. Used as the jar manifest Add-Opens attribute. -->
+	<property name="add_opens" value="java.base/java.lang java.base/java.util java.base/java.text java.base/java.math java.base/java.io java.desktop/java.awt java.desktop/javax.swing" />
+
 	<!-- Wine properties -->
 	<property name="wineprefix" value="/tmp/projectlibre-build" />
 	<property name="winearch" value="win64" />
@@ -188,6 +194,7 @@
 						<attribute name="Main-Class" value="com.projectlibre1.main.Main" />
 						<attribute name="Class-Path"
 							value="lib/projectlibre-contrib.jar lib/projectlibre-script.jar lib/projectlibre-reports.jar" />
+						<attribute name="Add-Opens" value="${add_opens}" />
 					</manifest>
 
 					<metainf dir="license">
@@ -206,6 +213,7 @@
 
 					<manifest>
 						<attribute name="Main-Class" value="com.projectlibre1.main.Main" />
+						<attribute name="Add-Opens" value="${add_opens}" />
 					</manifest>
 
 					<metainf dir="license">
