@@ -12,6 +12,10 @@ JAVA_HOME=/usr/lib/jvm/java-21-openjdk-amd64 ant -f projectlibre_build/build.xml
 
 # Build the Windows installer
 JAVA_HOME=/usr/lib/jvm/java-21-openjdk-amd64 ant -f projectlibre_build/build.xml windows-setup
+
+# Build the Debian/Ubuntu package (projectlibre_build/packages/projectlibre_*.deb)
+JAVA_HOME=/usr/lib/jvm/java-21-openjdk-amd64 ant -f projectlibre_build/build.xml deb
+sudo apt install ./projectlibre_build/packages/projectlibre_1.9.3-1+pl1.deb
 ```
 
 ## Budowanie
@@ -24,6 +28,10 @@ JAVA_HOME=/usr/lib/jvm/java-21-openjdk-amd64 ant -f projectlibre_build/build.xml
 
 # Zbuduj instalator Windows
 JAVA_HOME=/usr/lib/jvm/java-21-openjdk-amd64 ant -f projectlibre_build/build.xml windows-setup
+
+# Zbuduj pakiet Debian/Ubuntu (projectlibre_build/packages/projectlibre_*.deb)
+JAVA_HOME=/usr/lib/jvm/java-21-openjdk-amd64 ant -f projectlibre_build/build.xml deb
+sudo apt install ./projectlibre_build/packages/projectlibre_1.9.3-1+pl1.deb
 ```
 
 ## Polski

@@ -421,6 +421,9 @@
 		<copy todir="${deb}/usr/share/projectlibre/">
 			<fileset dir="${dist}">
 				<include name="**" />
+				<!-- Windows-only artifacts of the launch4j/windows-setup targets -->
+				<exclude name="jre/**" />
+				<exclude name="*.exe" />
 			</fileset>
 			<fileset dir="${resources}">
 				<include name="samples/**" />
@@ -488,6 +491,14 @@
 			<arg value="${deb}" />
 		</exec>
 
+		<exec executable="du" outputproperty="deb_du" failonerror="true">
+			<arg value="-sk" />
+			<arg value="--exclude=DEBIAN" />
+			<arg value="${deb}" />
+		</exec>
+		<propertyregex property="deb_installed_size" input="${deb_du}" regexp="^(\d+)" select="\1" />
+		<replace file="${deb}/DEBIAN/control" token="@installed_size@" value="${deb_installed_size}" />
+
 	</target>
 	<target name="deb-test">
 
@@ -510,36 +521,14 @@
 	</target>
 
 	<target name="deb-create">
-		<!-- need 0/0 -->
-		<!--exec
-		executable="sudo">
-			<arg value="chown"/>
-			<arg value="-R"/>
-			<arg value="root:wheel"/>
-			<arg value="${deb}"/>
-		</exec-->
-
-		<exec executable="${dpkg_deb}">
+		<!-- root:root ownership in the archive without sudo (dpkg >= 1.19);
+		     replaces the old Mac OS X cleandeb.sh tar repacking -->
+		<exec executable="${dpkg_deb}" failonerror="true">
 			<arg value="--build" />
-			<arg value="--no-uniform-compression" />
+			<arg value="--root-owner-group" />
+			<arg value="-Zxz" />
 			<arg value="${basedir}/${deb}" />
 			<arg value="${basedir}/${debroot}/projectlibre_${deb_version}-${deb_revision}.deb" />
-		</exec>
-
-		<!--exec
-		executable="sudo">
-			<arg value="chown"/>
-			<arg value="-R"/>
-			<arg value="${user.name}"/>
-			<arg value="${debroot}"/>
-		</exec-->
-		<exec executable="sh"> <!-- dpkg-deb package with wheel group on Mac OS X is causing check issues
-			on Ubuntu. Workaround to put numeric owner group in tars. requires GNU tar -->
-			<arg value="resources/deb/cleandeb.sh" />
-			<arg value="${gnu_tar}" />
-			<arg value="${basedir}/${debroot}" />
-			<arg value="projectlibre_${deb_version}-${deb_revision}.deb" />
-			<arg value="projectlibre_${deb_version}-${deb_revision}.deb" />
 		</exec>
 
 		<move todir="${packages}" file="${debroot}/projectlibre_${deb_version}-${deb_revision}.deb" />

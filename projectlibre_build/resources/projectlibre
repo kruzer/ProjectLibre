@@ -65,7 +65,7 @@ JAVA_INSTALL_DIR2="/usr/lib/jvm"
 JAVA_INSTALL_DIR_EXE2="bin/java"
 JAVA_INSTALL_DIR3="/opt/ibm"
 JAVA_INSTALL_DIR_EXE3="jre/bin/java"
-MIN_JAVA_VERSION="6"
+MIN_JAVA_VERSION="21"
 
 #Default conf values
 JAVA_EXE="java"
@@ -328,7 +328,7 @@ if [ "$JAVA_OK" -eq "0" ]; then
 
 	if [ "$JAVA_OK" -eq "0" ]; then
 		echo "Java not found or incorrect version."
-		echo "Please install OpenJDK, Oracle JRE 1.6+ or set JAVA_HOME environment variable if it's already installed."
+		echo "Please install OpenJDK 21+ or set JAVA_HOME environment variable if it's already installed."
 	else
 		echo "Java OK"
 	fi
