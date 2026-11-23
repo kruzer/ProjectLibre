@@ -58,9 +58,11 @@ package com.projectlibre1.graphic.configuration;
 import org.apache.commons.digester.Digester;
 
 import com.projectlibre1.configuration.Configuration;
+import com.projectlibre1.util.UIScale;
 
 /**
- *
+ * Sizes in pixels are multiplied by UIScale when configuration.xml is loaded
+ * (the setters are only called by the digester).
  */
 public class GraphicConfiguration {
 	protected int columnHeaderHeight;
@@ -114,21 +116,21 @@ public class GraphicConfiguration {
 	 * @param columnHeaderHeight The columnHeaderHeight to set.
 	 */
 	public void setColumnHeaderHeight(int columnHeaderHeight) {
-		this.columnHeaderHeight = columnHeaderHeight;
+		this.columnHeaderHeight = UIScale.scale(columnHeaderHeight);
 	}
     public int getPrintFooterHeight() {
 		return printFooterHeight;
 	}
 
 	public void setPrintFooterHeight(int printFooterHeight) {
-		this.printFooterHeight = printFooterHeight;
+		this.printFooterHeight = UIScale.scale(printFooterHeight);
 	}
 
 	public int getRowHeaderWidth() {
         return rowHeaderWidth;
     }
     public void setRowHeaderWidth(int rowHeaderWidth) {
-        this.rowHeaderWidth = rowHeaderWidth;
+        this.rowHeaderWidth = UIScale.scale(rowHeaderWidth);
     }
 	/**
 	 * @return Returns the rowChartHeaderWidth.
@@ -140,7 +142,7 @@ public class GraphicConfiguration {
 	 * @param rowChartHeaderWidth The rowChartHeaderWidth to set.
 	 */
 	public void setRowChartHeaderWidth(int rowChartHeaderWidth) {
-		this.rowChartHeaderWidth = rowChartHeaderWidth;
+		this.rowChartHeaderWidth = UIScale.scale(rowChartHeaderWidth);
 	}
 	/**
 	 * @return Returns the rowHeight.
@@ -152,7 +154,7 @@ public class GraphicConfiguration {
 	 * @param rowHeight The rowHeight to set.
 	 */
 	public void setRowHeight(int rowHeight) {
-		this.rowHeight = rowHeight;
+		this.rowHeight = UIScale.scale(rowHeight);
 	}
 	/**
 	 * @return Returns the ganttBarHeight.
@@ -164,7 +166,7 @@ public class GraphicConfiguration {
 	 * @param ganttBarHeight The ganttBarHeight to set.
 	 */
 	public void setGanttBarHeight(int ganttBarHeight) {
-		this.ganttBarHeight = ganttBarHeight;
+		this.ganttBarHeight = UIScale.scale(ganttBarHeight);
 	}
 	/**
 	 * @return Returns the ganttProgressBarHeight.
@@ -176,7 +178,7 @@ public class GraphicConfiguration {
 	 * @param ganttProgressBarHeight The ganttProgressBarHeight to set.
 	 */
 	public void setGanttProgressBarHeight(int ganttProgressBarHeight) {
-		this.ganttProgressBarHeight = ganttProgressBarHeight;
+		this.ganttProgressBarHeight = UIScale.scale(ganttProgressBarHeight);
 	}
     /**
      * @return Returns the ganttBarYOffset.
@@ -188,14 +190,14 @@ public class GraphicConfiguration {
      * @param ganttBarYOffset The ganttBarYOffset to set.
      */
     public void setGanttBarYOffset(int ganttBarYOffset) {
-        this.ganttBarYOffset = ganttBarYOffset;
+        this.ganttBarYOffset = UIScale.scale(ganttBarYOffset);
     }
     
 	public int getBaselineHeight() {
 		return baselineHeight;
 	}
 	public void setBaselineHeight(int baselineHeight) {
-		this.baselineHeight = baselineHeight;
+		this.baselineHeight = UIScale.scale(baselineHeight);
 	}
 	
 	
@@ -204,25 +206,25 @@ public class GraphicConfiguration {
 		return pertCellHeight;
 	}
 	public void setPertCellHeight(int pertCellHeight) {
-		this.pertCellHeight = pertCellHeight;
+		this.pertCellHeight = UIScale.scale(pertCellHeight);
 	}
 	public int getPertCellWidth() {
 		return pertCellWidth;
 	}
 	public void setPertCellWidth(int pertCellWidth) {
-		this.pertCellWidth = pertCellWidth;
+		this.pertCellWidth = UIScale.scale(pertCellWidth);
 	}
 	public int getPertXOffset() {
 		return pertXOffset;
 	}
 	public void setPertXOffset(int pertXOffset) {
-		this.pertXOffset = pertXOffset;
+		this.pertXOffset = UIScale.scale(pertXOffset);
 	}
 	public int getPertYOffset() {
 		return pertYOffset;
 	}
 	public void setPertYOffset(int pertYOffset) {
-		this.pertYOffset = pertYOffset;
+		this.pertYOffset = UIScale.scale(pertYOffset);
 	}
 	
 	
@@ -232,25 +234,25 @@ public class GraphicConfiguration {
 		return treeCellHeight;
 	}
 	public void setTreeCellHeight(int treeCellHeight) {
-		this.treeCellHeight = treeCellHeight;
+		this.treeCellHeight = UIScale.scale(treeCellHeight);
 	}
 	public int getTreeCellWidth() {
 		return treeCellWidth;
 	}
 	public void setTreeCellWidth(int treeCellWidth) {
-		this.treeCellWidth = treeCellWidth;
+		this.treeCellWidth = UIScale.scale(treeCellWidth);
 	}
 	public int getTreeXOffset() {
 		return treeXOffset;
 	}
 	public void setTreeXOffset(int treeXOffset) {
-		this.treeXOffset = treeXOffset;
+		this.treeXOffset = UIScale.scale(treeXOffset);
 	}
 	public int getTreeYOffset() {
 		return treeYOffset;
 	}
 	public void setTreeYOffset(int treeYOffset) {
-		this.treeYOffset = treeYOffset;
+		this.treeYOffset = UIScale.scale(treeYOffset);
 	}
 	
 	
@@ -266,7 +268,7 @@ public class GraphicConfiguration {
 		return selectionSquare;
 	}
 	public void setSelectionSquare(double selectionSquare) {
-		this.selectionSquare = selectionSquare;
+		this.selectionSquare = UIScale.scale(selectionSquare);
 	}
 	
 	
@@ -282,25 +284,25 @@ public class GraphicConfiguration {
 		return selectionProgress0;
 	}
 	public void setSelectionProgress0(double selectionProgress0) {
-		this.selectionProgress0 = selectionProgress0;
+		this.selectionProgress0 = UIScale.scale(selectionProgress0);
 	}
 	public double getSelectionProgress1() {
 		return selectionProgress1;
 	}
 	public void setSelectionProgress1(double selectionProgress1) {
-		this.selectionProgress1 = selectionProgress1;
+		this.selectionProgress1 = UIScale.scale(selectionProgress1);
 	}
 	public double getSelectionResize0() {
 		return selectionResize0;
 	}
 	public void setSelectionResize0(double selectionResize0) {
-		this.selectionResize0 = selectionResize0;
+		this.selectionResize0 = UIScale.scale(selectionResize0);
 	}
 	public double getSelectionResize1() {
 		return selectionResize1;
 	}
 	public void setSelectionResize1(double selectionResize1) {
-		this.selectionResize1 = selectionResize1;
+		this.selectionResize1 = UIScale.scale(selectionResize1);
 	}
 	
 	
@@ -308,7 +310,7 @@ public class GraphicConfiguration {
 		return networkCellSelectionSquare;
 	}
 	public void setNetworkCellSelectionSquare(double networkCellSelectionSquare) {
-		this.networkCellSelectionSquare = networkCellSelectionSquare;
+		this.networkCellSelectionSquare = UIScale.scale(networkCellSelectionSquare);
 	}
 
 	public int getGanttBarAnnotationXOffset() {
@@ -316,7 +318,7 @@ public class GraphicConfiguration {
 	}
 
 	public void setGanttBarAnnotationXOffset(int ganttBarAnnotationXOffset) {
-		this.ganttBarAnnotationXOffset = ganttBarAnnotationXOffset;
+		this.ganttBarAnnotationXOffset = UIScale.scale(ganttBarAnnotationXOffset);
 	}
 
 	public int getGanttBarAnnotationYOffset() {
@@ -324,7 +326,7 @@ public class GraphicConfiguration {
 	}
 
 	public void setGanttBarAnnotationYOffset(int ganttBarAnnotationYOffset) {
-		this.ganttBarAnnotationYOffset = ganttBarAnnotationYOffset;
+		this.ganttBarAnnotationYOffset = UIScale.scale(ganttBarAnnotationYOffset);
 	}
 
 	public int getGanttBarMinWidth() {
@@ -332,7 +334,7 @@ public class GraphicConfiguration {
 	}
 
 	public void setGanttBarMinWidth(int ganttBarMinWidth) {
-		this.ganttBarMinWidth = ganttBarMinWidth;
+		this.ganttBarMinWidth = UIScale.scale(ganttBarMinWidth);
 	}
 
 	

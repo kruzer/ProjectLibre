@@ -74,6 +74,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 import com.projectlibre1.pm.graphic.frames.GraphicManager;
 import com.projectlibre1.graphic.configuration.shape.Colors;
 import com.projectlibre1.util.Environment;
+import com.projectlibre1.util.UIScale;
 
 public class LafManagerImpl implements LafManager {
     protected static LookAndFeel plaf = null; // for substance
@@ -119,9 +120,11 @@ public class LafManagerImpl implements LafManager {
 								//UIManager.setLookAndFeel("com.sun.java.swing.plaf.gtk.GTKLookAndFeel");
 						else {
 							UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+							UIScale.scaleLookAndFeelFonts();
 							plaf = UIManager.getLookAndFeel();
 							return plaf;
 						}
+						UIScale.scaleLookAndFeelFonts();
 		    			plaf = UIManager.getLookAndFeel();
 
 			} catch (Exception e) {

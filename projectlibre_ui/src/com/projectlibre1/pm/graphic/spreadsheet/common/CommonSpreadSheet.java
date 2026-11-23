@@ -56,6 +56,7 @@
 package com.projectlibre1.pm.graphic.spreadsheet.common;
 import java.awt.Component;
 import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
@@ -110,6 +111,7 @@ import com.projectlibre1.server.access.ErrorLogger;
 import com.projectlibre1.util.Alert;
 import com.projectlibre1.workspace.SavableToWorkspace;
 import com.projectlibre1.workspace.WorkspaceSetting;
+import com.projectlibre1.util.UIScale;
 /**
  *
  */
@@ -138,6 +140,10 @@ public class CommonSpreadSheet extends CommonTable implements CacheListener, Sav
 		setAutoCreateColumnsFromModel(false);
 		rowHeader=new SpreadSheetRowHeader(this);
 		rowHeader.setRowHeight(getRowHeight());
+		if (UIScale.isScaled()){ // JTable's 450x400 default sets the initial gantt divider
+			Dimension d=getPreferredScrollableViewportSize();
+			setPreferredScrollableViewportSize(new Dimension(UIScale.scale(d.width),UIScale.scale(d.height)));
+		}
 
 		setFocusCycleRoot(true);
 
@@ -196,7 +202,7 @@ public class CommonSpreadSheet extends CommonTable implements CacheListener, Sav
 		ArrayList<Integer> colWidths=new ArrayList<Integer>(cols.getColumnCount());
 		colWidths.add(-1); //id column ignored
 		for (int i=0; i < cols.getColumnCount(); i++)
-			colWidths.add(cols.getColumn(i).getWidth());
+			colWidths.add(UIScale.unscale(cols.getColumn(i).getWidth())); // saved unscaled
 		((SpreadSheetFieldArray)fieldArray).setWidths(colWidths);
 		return (SpreadSheetFieldArray) fieldArray;
 	}
@@ -712,7 +718,7 @@ public class CommonSpreadSheet extends CommonTable implements CacheListener, Sav
      	Container p = getParent();
      	if (p instanceof JViewport && ws.viewPosition != null) {
      		try {
-     		((JViewport)p).setViewPosition(ws.viewPosition);
+     		((JViewport)p).setViewPosition(UIScale.scale(ws.viewPosition)); // saved unscaled
      		} catch (RuntimeException e) {
      			System.out.println("problem restoring viewport to point " + ws.viewPosition);
      		}
@@ -731,7 +737,7 @@ public class CommonSpreadSheet extends CommonTable implements CacheListener, Sav
 		ws.fieldArrayName = getFieldArray().toString();
      	Container p = getParent();
      	if (p instanceof JViewport) {
-     		ws.viewPosition = ((JViewport)p).getViewPosition();
+     		ws.viewPosition = UIScale.unscale(((JViewport)p).getViewPosition());
      	}
 		return ws;
 	}

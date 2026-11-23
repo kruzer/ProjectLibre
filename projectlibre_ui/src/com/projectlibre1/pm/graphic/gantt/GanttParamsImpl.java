@@ -67,6 +67,7 @@ import com.projectlibre1.pm.graphic.timescale.CoordinatesConverter;
 import com.projectlibre1.configuration.Dictionary;
 import com.projectlibre1.graphic.configuration.BarStyles;
 import com.projectlibre1.graphic.configuration.GraphicConfiguration;
+import com.projectlibre1.util.UIScale;
 
 public class GanttParamsImpl implements GanttParams, Serializable,Cloneable {
 	private static final long serialVersionUID = 2314555242629487089L;
@@ -84,7 +85,7 @@ public class GanttParamsImpl implements GanttParams, Serializable,Cloneable {
 	public GanttParamsImpl(){
 		configuration=GraphicConfiguration.getInstance();
 		barStyles=(BarStyles) Dictionary.get(BarStyles.category,"standard");
-		columnHeaderFont=new Font("Default",Font.PLAIN,10);
+		columnHeaderFont=UIScale.scale(new Font("Default",Font.PLAIN,10));
 		routing=new DefaultGanttLinkRouting();
 		rowHeight=configuration.getRowHeight();
 	}

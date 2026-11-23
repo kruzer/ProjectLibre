@@ -97,6 +97,7 @@ import com.projectlibre1.pm.graphic.frames.DocumentFrame;
 import com.projectlibre1.pm.graphic.frames.GraphicManager;
 import com.projectlibre1.strings.Messages;
 import com.projectlibre1.util.Environment;
+import com.projectlibre1.util.UIScale;
 
 public class TabbedNavigation implements MenuActionConstants, Serializable {
 	private static final long serialVersionUID = -270788624568075685L;
@@ -119,7 +120,7 @@ public class TabbedNavigation implements MenuActionConstants, Serializable {
 		private static final long serialVersionUID = 7993870683783896098L;
 		ExtTabbedPane() {
 			setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-			final Font normal = new Font("Verdana", 1, 11);
+			final Font normal = UIScale.scale(new Font("Verdana", 1, 11));
 			setFont(normal);
 			setBorder(BorderFactory.createEmptyBorder());
 

@@ -84,6 +84,7 @@ import com.projectlibre1.pm.graphic.spreadsheet.renderer.SpreadSheetNameCellRend
 import com.projectlibre1.configuration.Configuration;
 import com.projectlibre1.field.Field;
 import com.projectlibre1.graphic.configuration.SpreadSheetFieldArray;
+import com.projectlibre1.util.UIScale;
 
 /**
  *
@@ -121,7 +122,7 @@ public class SpreadSheetColumnModel extends DefaultTableColumnModel {
 			Iterator<Integer> s=colWidthList.iterator();
 			while (a.hasNext()&&s.hasNext()){
 				String f=a.next().getId();
-				int size=s.next();
+				int size=UIScale.scale(s.next()); // widths are saved unscaled
 				if (!colWidthMap.containsKey(f)) colWidthMap.put(f, size);
 			}
 		}
@@ -145,20 +146,20 @@ public class SpreadSheetColumnModel extends DefaultTableColumnModel {
 //			System.out.println("setting column " + columnIndex + " to field " + field + " ok = " + (field == getFieldInColumn(columnIndex)));
 
 			if (field.isNameField()) {
-				tc.setPreferredWidth((svg)?170:150);
+				tc.setPreferredWidth(UIScale.scale((svg)?170:150));
 				tc.setCellRenderer(new SpreadSheetNameCellRenderer());
 //				tc.setCellEditor(new SpreadSheetNameCellEditor(new SimpleEditor(String.class)));
 				tc.setCellEditor(new SpreadSheetCellEditorAdapter(new SimpleEditor(String.class)));
 			} else if (field == Configuration.getFieldFromId("Field.indicators")) {
-				tc.setPreferredWidth(50);
+				tc.setPreferredWidth(UIScale.scale(50));
 				tc.setCellRenderer(new SpreadSheetCellRendererAdapter(new IndicatorsRenderer()));
 				tc.setHeaderRenderer(new SpreadSheetColumnHeaderRenderer(IndicatorsRenderer.getCellHeader()));
 			} else if (field.getLookupTypes() != null) {
 				tc.setCellRenderer(new SpreadSheetCellRendererAdapter(new LookupRenderer()));
 			} else {
-				tc.setPreferredWidth(150);
+				tc.setPreferredWidth(UIScale.scale(150));
 				if (field.hasOptions()) {
-					tc.setPreferredWidth(150);
+					tc.setPreferredWidth(UIScale.scale(150));
 					tc.setCellRenderer(new SpreadSheetCellRendererAdapter(new SimpleRenderer()));
 					// note that in Spreadsheet, there getCellEditor() is
 					// overridden and dynamic combos are filled there
@@ -184,7 +185,7 @@ public class SpreadSheetColumnModel extends DefaultTableColumnModel {
 				} else {
 					//SimpleRenderer in other cases, LC 8/2006
 					tc.setCellRenderer(new SpreadSheetCellRendererAdapter(new SimpleRenderer()));
-					tc.setPreferredWidth(field.getColumnWidth(svg));
+					tc.setPreferredWidth(UIScale.scale(field.getColumnWidth(svg)));
 				}
 			}
 			Integer size=colWidthMap.get(field.getId());

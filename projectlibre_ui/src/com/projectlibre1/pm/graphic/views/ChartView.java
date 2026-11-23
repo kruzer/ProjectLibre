@@ -80,6 +80,7 @@ import com.projectlibre1.pm.graphic.views.synchro.Synchronizer;
 import com.projectlibre1.graphic.configuration.GraphicConfiguration;
 import com.projectlibre1.undo.UndoController;
 import com.projectlibre1.workspace.WorkspaceSetting;
+import com.projectlibre1.util.UIScale;
 
 /**
  * 
@@ -237,11 +238,11 @@ public class ChartView extends SplittedView implements SelectionNodeListener, Ba
 		chartInfo.setRestoring(true);
 		chartInfo.restoreWorkspace(ws.chartInfo, context);
 		scrollPane.restoreWorkspace(ws.scrollPane, context);
-		setDividerLocation(ws.dividerLocation);
+		setDividerLocation(UIScale.scale(ws.dividerLocation)); // saved unscaled
 		chartLegend.setControlValues();
 		chartLegend.restoreWorkspace(ws.chartLegend, context);
-		getLeftScrollPane().getViewport().setViewPosition(ws.legendViewPosition);
-		getRightScrollPane().getViewport().setViewPosition(ws.chartViewPosition);
+		getLeftScrollPane().getViewport().setViewPosition(UIScale.scale(ws.legendViewPosition));
+		getRightScrollPane().getViewport().setViewPosition(UIScale.scale(ws.chartViewPosition));
 		chartInfo.setRestoring(false);
 		
 	}
@@ -249,10 +250,10 @@ public class ChartView extends SplittedView implements SelectionNodeListener, Ba
 		Workspace ws = new Workspace();
 		ws.chartInfo = chartInfo.createWorkspace(context);
 		ws.scrollPane = scrollPane.createWorkspace(context);
-		ws.dividerLocation = getDividerLocation();
+		ws.dividerLocation = UIScale.unscale(getDividerLocation());
 		ws.chartLegend = chartLegend.createWorkspace(context);
-		ws.legendViewPosition = getLeftScrollPane().getViewport().getViewPosition();
-		ws.chartViewPosition = getRightScrollPane().getViewport().getViewPosition();
+		ws.legendViewPosition = UIScale.unscale(getLeftScrollPane().getViewport().getViewPosition());
+		ws.chartViewPosition = UIScale.unscale(getRightScrollPane().getViewport().getViewPosition());
 		return ws;
 	}
 

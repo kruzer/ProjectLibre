@@ -56,7 +56,9 @@
 package com.projectlibre1.pm.graphic.frames;
 
 import java.awt.Dimension;
+import java.awt.GraphicsEnvironment;
 import java.awt.HeadlessException;
+import java.awt.Rectangle;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -71,6 +73,7 @@ import com.projectlibre1.pm.graphic.IconManager;
 import com.projectlibre1.pm.graphic.frames.workspace.FrameHolder;
 import com.projectlibre1.pm.graphic.frames.workspace.FrameManager;
 import com.projectlibre1.util.Environment;
+import com.projectlibre1.util.UIScale;
 
 public class MainRibbonFrame extends JRibbonFrame implements FrameHolder{
 	private static final long serialVersionUID = -5161903673269959353L;
@@ -94,10 +97,14 @@ public class MainRibbonFrame extends JRibbonFrame implements FrameHolder{
 	}
 
 	public void init() {
+		Dimension size=Environment.isMac()?new Dimension(1280, 768):new Dimension(1024, 768);
+		if (UIScale.isScaled()){ // room for the larger spreadsheet and gantt, within the screen
+			Rectangle screen=GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds();
+			size=new Dimension(Math.min(UIScale.scale(size.width),screen.width),Math.min(UIScale.scale(size.height),screen.height));
+		}
 		if (Environment.isWindows()) // in windows, this is needed otherwise initial display has no frame
-		   setSize(1024, 768);
-		if (Environment.isMac()) setPreferredSize(new Dimension(1280, 768));
-		else setPreferredSize(new Dimension(1024, 768));
+		   setSize(size);
+		setPreferredSize(size);
 		setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE/*DISPOSE_ON_CLOSE*/);
 		addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {

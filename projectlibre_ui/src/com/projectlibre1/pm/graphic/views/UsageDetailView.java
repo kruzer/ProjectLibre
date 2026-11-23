@@ -98,6 +98,7 @@ import com.projectlibre1.pm.task.Project;
 import com.projectlibre1.strings.Messages;
 import com.projectlibre1.undo.UndoController;
 import com.projectlibre1.workspace.WorkspaceSetting;
+import com.projectlibre1.util.UIScale;
 
 /**
  * 
@@ -312,7 +313,7 @@ public class UsageDetailView extends SplittedView implements BaseView, FieldArra
 		timeSpreadSheet.restoreWorkspace(ws.timeSpreadSheet, context); 
 		timeSpreadSheet.setSelectedFieldArray((ArrayList) SpreadSheetFieldArray.fromIdArray(ws.selectedFieldArray));
 		timeScrollPane.restoreWorkspace(ws.scrollPane, context);
-		setDividerLocation(ws.dividerLocation);
+		setDividerLocation(UIScale.scale(ws.dividerLocation)); // saved unscaled
 	}
 	public WorkspaceSetting createWorkspace(int context) {
 		Workspace ws = new Workspace();
@@ -320,7 +321,7 @@ public class UsageDetailView extends SplittedView implements BaseView, FieldArra
 		ws.timeSpreadSheet = timeSpreadSheet.createWorkspace(context);
 		ws.selectedFieldArray = SpreadSheetFieldArray.toIdArray(timeSpreadSheet.getSelectedFieldArray());
 		ws.scrollPane = timeScrollPane.createWorkspace(context);
-		ws.dividerLocation = getDividerLocation();
+		ws.dividerLocation = UIScale.unscale(getDividerLocation());
 		return ws;
 	}
 

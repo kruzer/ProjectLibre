@@ -73,6 +73,7 @@ import com.projectlibre1.timescale.TimeScaleEvent;
 import com.projectlibre1.timescale.TimeScaleListener;
 import com.projectlibre1.workspace.SavableToWorkspace;
 import com.projectlibre1.workspace.WorkspaceSetting;
+import com.projectlibre1.util.UIScale;
 
 /**
  *
@@ -206,12 +207,12 @@ public class ScaledScrollPane extends JScrollPane implements TimeScaleListener, 
 	public void restoreWorkspace(WorkspaceSetting w, int context) {
 		Workspace ws = (Workspace) w;
      	if (ws.viewPosition != null) {
-     		getViewport().setViewPosition(ws.viewPosition);
+     		getViewport().setViewPosition(UIScale.scale(ws.viewPosition)); // saved unscaled
      	}
 	}
 	public WorkspaceSetting createWorkspace(int context) {
 		Workspace ws = new Workspace();
-   		ws.viewPosition = getViewport().getViewPosition();
+   		ws.viewPosition = UIScale.unscale(getViewport().getViewPosition());
 		return ws;
 	}
 

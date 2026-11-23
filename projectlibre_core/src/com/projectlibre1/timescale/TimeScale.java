@@ -60,6 +60,7 @@ import java.util.Calendar;
 
 import com.projectlibre1.util.DateTime;
 import com.projectlibre1.util.Environment;
+import com.projectlibre1.util.UIScale;
 
 /**
  *
@@ -245,16 +246,16 @@ public class TimeScale {
 	 * @param minWidth The minWidth to set.
 	 */
 	public void setNormalMinWidth(int normalMinWidth) {
-		this.normalMinWidth = normalMinWidth;
-		minWidth=normalMinWidth;
+		this.normalMinWidth = UIScale.scale(normalMinWidth);
+		minWidth=this.normalMinWidth;
 	}
 	/**
 	 * @param minWidth The minWidth to set.
 	 */
 	public void setNormalMinWidthChinese(int normalMinWidth) {
 		if (Environment.isChinese()){ //overrides because it's called after setNormalMinWidth()
-			this.normalMinWidth = normalMinWidth;
-			minWidth=normalMinWidth;
+			this.normalMinWidth = UIScale.scale(normalMinWidth);
+			minWidth=this.normalMinWidth;
 		}
 	}
 	/**
@@ -309,7 +310,7 @@ public class TimeScale {
 	
 	
 	public void setTableMinWidth(int tableMinWidth) {
-		this.tableMinWidth = tableMinWidth;
+		this.tableMinWidth = UIScale.scale(tableMinWidth);
 	}
 	
 	

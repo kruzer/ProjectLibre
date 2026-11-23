@@ -100,6 +100,7 @@ import com.projectlibre1.pm.time.HasStartAndEnd;
 import com.projectlibre1.strings.Messages;
 import com.projectlibre1.undo.UndoController;
 import com.projectlibre1.workspace.WorkspaceSetting;
+import com.projectlibre1.util.UIScale;
 
 /**
  *
@@ -371,13 +372,13 @@ public class GanttView extends SplittedView implements BaseView, ScheduleEventLi
 		Workspace ws = (Workspace) w;
 		spreadSheet.restoreWorkspace(ws.spreadSheet, context);
 		ganttScrollPane.restoreWorkspace(ws.scrollPane, context);
-		setDividerLocation(ws.dividerLocation);
+		setDividerLocation(UIScale.scale(ws.dividerLocation)); // saved unscaled
 	}
 	public WorkspaceSetting createWorkspace(int context) {
 		Workspace ws = new Workspace();
 		ws.spreadSheet = spreadSheet.createWorkspace(context);
 		ws.scrollPane = ganttScrollPane.createWorkspace(context);
-		ws.dividerLocation = getDividerLocation();
+		ws.dividerLocation = UIScale.unscale(getDividerLocation());
 		return ws;
 	}
 

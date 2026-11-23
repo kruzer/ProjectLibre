@@ -19,6 +19,20 @@ JAVA_HOME=/usr/lib/jvm/java-21-openjdk-amd64 ant -f projectlibre_build/build.xml
 sudo apt install ./projectlibre_build/packages/projectlibre_1.9.3-1+pl1.deb
 ```
 
+## UI scaling
+
+Linux Java only accepts whole-number `sun.java2d.uiScale` values, so the fork has its
+own option for fractional steps. It enlarges fonts, rows, Gantt bars, the timescale
+and column widths:
+
+```bash
+java -Dprojectlibre.fontScale=1.5 -jar projectlibre.jar
+```
+
+For the installed package, add `-Dprojectlibre.fontScale=1.2` (or `1.5`) to `JAVA_OPTS`
+in `~/.projectlibre/run.conf`. Column widths and positions are saved to `.pod` files
+unscaled, so a project looks the same whatever scale it was saved with.
+
 ## Budowanie
 
 Przykład na linux z OpenJDK 21:
@@ -35,6 +49,20 @@ JAVA_HOME=/usr/lib/jvm/java-21-openjdk-amd64 ant -f projectlibre_build/build.xml
 JAVA_HOME=/usr/lib/jvm/java-21-openjdk-amd64 ant -f projectlibre_build/build.xml deb
 sudo apt install ./projectlibre_build/packages/projectlibre_1.9.3-1+pl1.deb
 ```
+
+## Skalowanie interfejsu
+
+Java na Linuksie przyjmuje tylko całkowite wartości `sun.java2d.uiScale`, dlatego fork ma
+własną opcję dla ułamkowych skal. Powiększa czcionki, wiersze, paski Gantta, oś czasu
+i szerokości kolumn:
+
+```bash
+java -Dprojectlibre.fontScale=1.5 -jar projectlibre.jar
+```
+
+W zainstalowanej paczce dopisz `-Dprojectlibre.fontScale=1.2` (lub `1.5`) do `JAVA_OPTS`
+w `~/.projectlibre/run.conf`. Szerokości kolumn i pozycje zapisują się w plikach `.pod`
+bez skali, więc projekt wygląda tak samo niezależnie od skali, z jaką go zapisano.
 
 ## Polski
 

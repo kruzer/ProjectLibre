@@ -107,6 +107,9 @@ public class FontUtil {
 	}
 	
 	public static Font getFont(String fontName,int type){
+		return UIScale.scale(getUnscaledFont(fontName,type));
+	}
+	private static Font getUnscaledFont(String fontName,int type){
 		Font font=Font.decode(Environment.getFont(type));
 		if (fontName==null) return font;
 		Font newFont=font.decode(fontName);
