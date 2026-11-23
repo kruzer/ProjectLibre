@@ -10,7 +10,8 @@ An example of linux build wit OpenJDK 21:
 # Build the jar file
 JAVA_HOME=/usr/lib/jvm/java-21-openjdk-amd64 ant -f projectlibre_build/build.xml
 
-# Build the Windows installer
+# Build the Windows installer (needs WineHQ 10+ with i386, e.g. winehq-stable;
+# Ubuntu's wine 9.0 crashes the Windows JDK: missing GetAnycastIpAddressTable)
 JAVA_HOME=/usr/lib/jvm/java-21-openjdk-amd64 ant -f projectlibre_build/build.xml windows-setup
 
 # Build the Debian/Ubuntu package (projectlibre_build/packages/projectlibre_*.deb)
@@ -26,7 +27,8 @@ Przykład na linux z OpenJDK 21:
 # Zbuduj plik jar
 JAVA_HOME=/usr/lib/jvm/java-21-openjdk-amd64 ant -f projectlibre_build/build.xml
 
-# Zbuduj instalator Windows
+# Zbuduj instalator Windows (wymaga WineHQ 10+ z i386, np. winehq-stable;
+# wine 9.0 z Ubuntu wywraca Windowsowe JDK: brak GetAnycastIpAddressTable)
 JAVA_HOME=/usr/lib/jvm/java-21-openjdk-amd64 ant -f projectlibre_build/build.xml windows-setup
 
 # Zbuduj pakiet Debian/Ubuntu (projectlibre_build/packages/projectlibre_*.deb)

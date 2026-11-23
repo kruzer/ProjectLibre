@@ -1057,7 +1057,7 @@
 
 	<target name="windows-setup" depends="download-inno, launch4j">
 		<echo message="Creating Windows setup..." />
-		<exec executable="wine">
+		<exec executable="wine" failonerror="true">
 			<arg value="${innosetup_compiler}" />
 			<arg value="projectlibre.iss" />
 			<env key="WINEPREFIX" value="${wineprefix}" />
@@ -1074,7 +1074,7 @@
 			<isset property="launch4j_jar_exists" />
 			<then>
 				<echo message="Running Launch4j..." />
-				<exec executable="wine">
+				<exec executable="wine" failonerror="true">
 					<arg value="${jdk21_windows_unzip}/bin/java.exe" />
 					<arg value="-jar" />
 					<arg value="${launch4j_dir}/launch4j.jar" />
@@ -1100,7 +1100,7 @@
 			</not>
 			<then>
 				<echo message="Preparing JRE using jlink..." />
-				<exec executable="wine">
+				<exec executable="wine" failonerror="true">
 					<arg value="${jdk21_windows_unzip}/bin/jlink.exe" />
 					<arg value="--module-path" />
 					<arg value="dist/projectlibre.jar" />

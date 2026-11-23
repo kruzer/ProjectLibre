@@ -5,7 +5,6 @@
   <jar>dist\projectlibre.jar</jar>
   <outfile>dist\projectlibre.exe</outfile>
   <errTitle></errTitle>
-  <cmdLine>-Xms128m -Xmx768m</cmdLine>
   <chdir>.</chdir>
   <priority>normal</priority>
   <downloadUrl>https://aka.ms/download-jdk/microsoft-jdk-21.0.6-windows-x64.msi</downloadUrl>
