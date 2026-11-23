@@ -44,6 +44,10 @@ Name: "{commondesktop}\ProjectLibre"; Filename: "{app}\projectlibre.exe"; Tasks:
 [Run]
 Filename: "{app}\projectlibre.exe"; Description: "ProjectLibre"; Flags: nowait postinstall skipifdoesntexist
 
+[InstallDelete]
+; drop the previous bundled JRE so files removed in a newer JDK do not linger
+Type: filesandordirs; Name: "{app}\jre"
+
 [UninstallDelete]
-Type: files; Name: "{app}\jre"
-Type: files; Name: "{app}\lib"
+Type: filesandordirs; Name: "{app}\jre"
+Type: filesandordirs; Name: "{app}\lib"

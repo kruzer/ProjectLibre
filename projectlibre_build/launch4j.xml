@@ -7,7 +7,7 @@
   <errTitle></errTitle>
   <chdir>.</chdir>
   <priority>normal</priority>
-  <downloadUrl>https://aka.ms/download-jdk/microsoft-jdk-21.0.6-windows-x64.msi</downloadUrl>
+  <downloadUrl>https://aka.ms/download-jdk/microsoft-jdk-21.0.13.1-windows-x64.msi</downloadUrl>
   <supportUrl></supportUrl>
   <stayAlive>false</stayAlive>
   <restartOnCrash>false</restartOnCrash>

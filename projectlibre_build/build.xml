@@ -982,7 +982,7 @@
 		<mkdir dir="${packages}" />
 
 		<condition property="jdk_exists">
-			<available file="${jdk21_windows_dir}" type="dir" />
+			<available file="${jdk21_windows_unzip}/bin/jlink.exe" type="file" />
 		</condition>
 
 		<if>
@@ -991,14 +991,20 @@
 			</not>
 			<then>
 				<get src="${jdk21_windows_url}" dest="${jdk21_windows_zip}" skipexisting="true" />
+				<checksum file="${jdk21_windows_zip}" algorithm="SHA-256"
+					property="${jdk21_windows_sha256}" verifyproperty="jdk_checksum_ok" />
+				<fail message="SHA-256 mismatch for ${jdk21_windows_zip} (expected ${jdk21_windows_sha256})">
+					<condition>
+						<isfalse value="${jdk_checksum_ok}" />
+					</condition>
+				</fail>
+				<!-- strip the top-level jdk-x.y.z+b/ directory from the archive -->
 				<unzip src="${jdk21_windows_zip}" dest="${jdk21_windows_dir}">
-					<patternset>
-						<include name="**/*" />
-					</patternset>
+					<cutdirsmapper dirs="1" />
 				</unzip>
 			</then>
 			<else>
-				<echo message="OpenJDK already downloaded and extracted." />
+				<echo message="OpenJDK ${jdk21_windows_version} already downloaded and extracted." />
 			</else>
 		</if>
 	</target>
@@ -1091,21 +1097,43 @@
 	</target>
 
 	<target name="prepare-jre" depends="download-jdk21-windows">
+		<!-- reuse dist/jre only if it was linked from the configured JDK version -->
+		<loadfile property="jdk_release_version" srcFile="${jdk21_windows_unzip}/release" failonerror="false">
+			<filterchain>
+				<linecontainsregexp>
+					<regexp pattern="^JAVA_VERSION=" />
+				</linecontainsregexp>
+			</filterchain>
+		</loadfile>
+		<loadfile property="jre_release_version" srcFile="dist/jre/release" failonerror="false">
+			<filterchain>
+				<linecontainsregexp>
+					<regexp pattern="^JAVA_VERSION=" />
+				</linecontainsregexp>
+			</filterchain>
+		</loadfile>
 		<condition property="jre_exists">
-			<available file="dist/jre" type="dir" />
+			<and>
+				<isset property="jre_release_version" />
+				<equals arg1="${jdk_release_version}" arg2="${jre_release_version}" />
+			</and>
 		</condition>
 		<if>
 			<not>
 				<isset property="jre_exists" />
 			</not>
 			<then>
-				<echo message="Preparing JRE using jlink..." />
+				<echo message="Preparing JRE ${jdk21_windows_version} using jlink..." />
+				<delete dir="dist/jre" />
+				<mkdir dir="${wineprefix}" />
 				<exec executable="wine" failonerror="true">
 					<arg value="${jdk21_windows_unzip}/bin/jlink.exe" />
 					<arg value="--module-path" />
 					<arg value="dist/projectlibre.jar" />
 					<arg value="--add-modules" />
 					<arg value="java.base,java.desktop,java.prefs,java.sql" />
+					<arg value="--no-header-files" />
+					<arg value="--no-man-pages" />
 					<arg value="--output" />
 					<arg value="dist/jre" />
 					<env key="WINEPREFIX" value="${wineprefix}" />
@@ -1114,7 +1142,7 @@
 				<echo message="JRE preparation complete." />
 			</then>
 			<else>
-				<echo message="JRE already exists." />
+				<echo message="JRE ${jdk21_windows_version} already exists." />
 			</else>
 		</if>
 	</target>
