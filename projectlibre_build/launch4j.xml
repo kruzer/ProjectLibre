@@ -27,5 +27,6 @@
     <opt>--add-opens=java.base/java.io=ALL-UNNAMED</opt>
     <opt>--add-opens=java.desktop/java.awt=ALL-UNNAMED</opt>
     <opt>--add-opens=java.desktop/javax.swing=ALL-UNNAMED</opt>
+    <opt>--add-opens=java.desktop/javax.swing.tree=ALL-UNNAMED</opt>
   </jre>
 </launch4jConfig>

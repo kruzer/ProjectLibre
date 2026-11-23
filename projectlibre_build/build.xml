@@ -62,7 +62,7 @@
 	     compiling formulas (context menus, Indent/Outdent, styles, sorters).
 	     JDK 17+ forbids that unless the packages are opened; without these the
 	     formulas silently fail. Used as the jar manifest Add-Opens attribute. -->
-	<property name="add_opens" value="java.base/java.lang java.base/java.util java.base/java.text java.base/java.math java.base/java.io java.desktop/java.awt java.desktop/javax.swing" />
+	<property name="add_opens" value="java.base/java.lang java.base/java.util java.base/java.text java.base/java.math java.base/java.io java.desktop/java.awt java.desktop/javax.swing java.desktop/javax.swing.tree" />
 
 	<!-- Wine properties -->
 	<property name="wineprefix" value="/tmp/projectlibre-build" />
